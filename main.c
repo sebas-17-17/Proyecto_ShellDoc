@@ -23,7 +23,7 @@ void proceso_captura_terminal() {
     fprintf(archivo, "title: \"Auditoría de Sistema y Procesos Linux\"\n");
     fprintf(archivo, "author: \"Grupo 5 - ShellDoc Web\"\n");
     fprintf(archivo, "format: html\n");
-    fprintf(archivo, "theme: cosmic\n");
+    fprintf(archivo, "theme: cosmo\n");
     fprintf(archivo, "---\n\n");
 
     fprintf(archivo, "Proyecto SheelDoc\n\n");
