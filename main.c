@@ -4,6 +4,7 @@
 #include <sys/types.h>
 #include <fcntl.h>
 #include <semaphore.h>
+#include <sys/wait.h>
 
 // Semáforo para el Integrante 3 (Renderizador)
 // sem_post equivale a semSignal
