@@ -116,7 +116,8 @@ void proceso_renderizado_quarto() {
 	    } else {
 		    printf("[Proceso 2] Error crítico: No se pudo renderizar documento.qmd.\n");
 	    }
-	    // NOTA: Si el Integrante 4 (Subida a la nube) implementa su semáforo,                                                                                                  // aquí deberás poner el sem_post() de su respectivo semáforo.
+	    // NOTA: Si el Integrante 4 (Subida a la nube) implementa su semáforo,                          
+	    // aquí deberás poner el sem_post() de su respectivo semáforo.
  }
 
 
