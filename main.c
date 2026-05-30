@@ -6,6 +6,7 @@
 #include <semaphore.h>
 
 // Semáforo para el Integrante 3 (Renderizador)
+// sem_post equivale a semSignal
 #define SEM_QUARTO "/sem_quarto"
 
 void proceso_captura_terminal() {
@@ -26,24 +27,24 @@ void proceso_captura_terminal() {
     fprintf(archivo, "theme: cosmo\n");
     fprintf(archivo, "---\n\n");
 
-    fprintf(archivo, "Proyecto SheelDoc\n\n");
-    fprintf(archivo, "Documento fue generado automáticamente por un programa en C interactuando con la Shell de Linux.\n\n");
+    fprintf(archivo, "# Proyecto ShellDoc\n\n");
+    fprintf(archivo, "Documento generado automáticamente por un programa en C interactuando con la Shell de Linux.\n\n");
 
     //Comando para indetificar user 
-    fprintf(archivo, "Identificar usuario y servidor\n\n");
+    fprintf(archivo, "## Identificar usuario y servidor\n\n");
     fprintf(archivo, "```bash\n");
     fprintf(archivo, "$ whoami && hostname\n");
     fflush(archivo); 
     fclose(archivo);
 
-    system("whoami && hostname >> documento.qmd"); 
+    system("(whoami && hostname) >> documento.qmd"); 
 
     archivo = fopen("documento.qmd", "a");
-    fprintf(archivo, "```\n\n");
+    fprintf(archivo, "\n```\n\n");
 
 
     //Comando para ver memoria RAM
-    fprintf(archivo, "Estado de la Memoria RAM\n\n");
+    fprintf(archivo, "## Estado de la Memoria RAM\n\n");
     fprintf(archivo, "```bash\n");
     fprintf(archivo, "$ free -h\n");
     fflush(archivo); 
@@ -52,11 +53,11 @@ void proceso_captura_terminal() {
     system("free -h >> documento.qmd"); 
 
     archivo = fopen("documento.qmd", "a");
-    fprintf(archivo, "```\n\n");
+    fprintf(archivo, "\n ```\n\n");
 
 
     //Comando para ver el almacenamiento
-    fprintf(archivo, "Uso del Disco Principal\n\n");
+    fprintf(archivo, "## Uso del Disco Principal\n\n");
     fprintf(archivo, "```bash\n");
     fprintf(archivo, "$ df -h /\n");
     fflush(archivo); 
@@ -65,12 +66,12 @@ void proceso_captura_terminal() {
     system("df -h / >> documento.qmd"); 
 
     archivo = fopen("documento.qmd", "a");
-    fprintf(archivo, "```\n\n");
+    fprintf(archivo, "\n```\n\n");
 
 
     //Comando para ver los procesos 
-    fprintf(archivo, "Procesos con Mayor Consumo de Memoria (ps)\n\n");
-    fprintf(archivo, "Muestra el PID y el PPID de los procesos activos:\n\n");
+    fprintf(archivo, "## Procesos con Mayor Consumo de Memoria (ps)\n\n");
+    fprintf(archivo, "Muestra el PID, el PPID y memoeria utilizados:\n\n");
     fprintf(archivo, "```bash\n");
     fprintf(archivo, "$ ps -eo pid,ppid,cmd,%%mem --sort=-%%mem | head -n 11\n");
     fflush(archivo); 
@@ -79,7 +80,7 @@ void proceso_captura_terminal() {
     system("ps -eo pid,ppid,cmd,%mem --sort=-%mem | head -n 11 >> documento.qmd"); 
 
     archivo = fopen("documento.qmd", "a");
-    fprintf(archivo, "```\n");
+    fprintf(archivo, "\n```\n");
 
 
     //Cerrar el archivo
