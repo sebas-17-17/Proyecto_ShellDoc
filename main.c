@@ -98,8 +98,49 @@ void proceso_captura_terminal() {
     }
 }
 
+
 int main() {
-    // Llamada de prueba 
-    proceso_captura_terminal();
+    pid_t pid1;
+    sem_t *sem;
+
+    printf("[Integrante 2] Iniciando control de procesos y semáforos...\n");
+
+    // 1. CREAR EL SEMÁFORO NOMBRADO QUE ESPERA EL INTEGRANTE 1 Y 3
+    sem = sem_open(SEM_QUARTO, O_CREAT, 0644, 0);
+    if (sem == SEM_FAILED) {
+        perror("Error al crear el semáforo SEM_QUARTO");
+        exit(EXIT_FAILURE);
+    }
+
+    // 2. CREAR EL PROCESO HIJO MEDIANTE FORK
+    pid1 = fork();
+
+    if (pid1 < 0) {
+        perror("Error al ejecutar fork");
+        sem_unlink(SEM_QUARTO); 
+        exit(EXIT_FAILURE);
+    } 
+    else if (pid1 == 0) {
+        // --- PROCESO HIJO 1 ---
+        // Invoca la función de captura intacta como pide la guía
+        proceso_captura_terminal(); 
+        exit(EXIT_SUCCESS);
+    } 
+    else {
+        // --- PROCESO PADRE ---
+        printf("[Padre] Proceso de captura asignado al Hijo 1 con PID: %d\n", pid1);
+        
+        // Esperamos a que el proceso hijo termine su ejecución por completo
+        wait(NULL); 
+        
+        printf("[Padre] El Hijo 1 ha terminado. Pasando control al renderizador.\n");
+        
+        // 3. LIMPIEZA DEL SEMÁFORO AL FINALIZAR EL PROGRAMA
+        sem_close(sem);
+        sem_unlink(SEM_QUARTO); 
+        
+        printf("[Main] Flujo del Integrante 2 completado con éxito.\n");
+    }
+
     return 0;
 }
