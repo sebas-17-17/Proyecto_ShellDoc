@@ -6,7 +6,7 @@
 #include <semaphore.h>
 #include <sys/wait.h>
 
-// Semáforo para el Integrante 3 (Renderizador)
+// Semáforo para el Integrante 3 (Renderizador )
 // sem_post equivale a semSignal
 #define SEM_QUARTO "/sem_quarto"
 
@@ -98,6 +98,26 @@ void proceso_captura_terminal() {
         printf("Semáforo no encontrado\n");
     }
 }
+
+void proceso_renderizado_quarto() {
+	    printf("[Proceso 2] Renderizador en espera... Aguardando señal del Proceso 1.\n");
+	    sem_t *sem = sem_open(SEM_QUARTO, 0);
+	    if (sem != SEM_FAILED) {
+	        sem_wait(sem); 
+	        sem_close(sem); 
+	    } else { 
+		    perror("Error al abrir el semáforo en el Proceso 2");
+		    exit(EXIT_FAILURE);
+	    }
+	    printf("[Proceso 2] ¡Señal recibida! El archivo QMD está listo. Iniciando Quarto...\n");
+	    int resultado = system("quarto render documento.qmd");
+	    if (resultado == 0) { 
+		    printf("[Proceso 2] ¡Éxito! El archivo documento.html ha sido generado mediante Quarto.\n"); 
+	    } else {
+		    printf("[Proceso 2] Error crítico: No se pudo renderizar documento.qmd.\n");
+	    }
+	    // NOTA: Si el Integrante 4 (Subida a la nube) implementa su semáforo,                                                                                                  // aquí deberás poner el sem_post() de su respectivo semáforo.
+ }
 
 
 int main() {
