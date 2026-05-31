@@ -1,6 +1,6 @@
 ---
-title: "Auditoría de Sistema y Procesos Linux"
-author: "Grupo 5 - ShellDoc Web"
+title: "Documentación de Sesiones Linux con Quarto, Hilos y Procesos en C"
+author: "Grupo 3 - Sistemas Operativos"
 format: html
 theme: cosmo
 ---
@@ -23,7 +23,7 @@ server
 ```bash
 $ free -h
                total        used        free      shared  buff/cache   available
-Mem:           3,8Gi       417Mi       2,9Gi       1,1Mi       737Mi       3,4Gi
+Mem:           3,8Gi       424Mi       2,7Gi       1,1Mi       915Mi       3,4Gi
 Swap:             0B          0B          0B
 
 ```

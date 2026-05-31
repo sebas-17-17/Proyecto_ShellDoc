@@ -23,8 +23,8 @@ void proceso_captura_terminal() {
 
     //Encabezado de Quarto
     fprintf(archivo, "---\n");
-    fprintf(archivo, "title: \"Auditoría de Sistema y Procesos Linux\"\n");
-    fprintf(archivo, "author: \"Grupo 5 - ShellDoc Web\"\n");
+    fprintf(archivo, "title: \"Documentación de Sesiones Linux con Quarto, Hilos y Procesos en C\"\n");
+    fprintf(archivo, "author: \"Grupo 3 - Sistemas Operativos\"\n");
     fprintf(archivo, "format: html\n");
     fprintf(archivo, "theme: cosmo\n");
     fprintf(archivo, "---\n\n");
