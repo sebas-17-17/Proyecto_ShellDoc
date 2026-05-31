@@ -109,37 +109,37 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="identificar-usuario-y-servidor" class="level2">
 <h2 class="anchored" data-anchor-id="identificar-usuario-y-servidor">Identificar usuario y servidor</h2>
 <div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> whoami <span class="kw">&amp;&amp;</span> <span class="fu">hostname</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">ale</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">serveralex</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">sebastian</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">server</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="estado-de-la-memoria-ram" class="level2">
 <h2 class="anchored" data-anchor-id="estado-de-la-memoria-ram">Estado de la Memoria RAM</h2>
 <div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> free <span class="at">-h</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>               <span class="ex">total</span>        used        free      shared  buff/cache   available</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Mem:</span>           3,8Gi       773Mi       2,8Gi       1,0Mi       538Mi       3,1Gi</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="ex">Swap:</span>          2,2Gi          0B       2,2Gi</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Mem:</span>           3,8Gi       417Mi       2,9Gi       1,1Mi       737Mi       3,4Gi</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="ex">Swap:</span>             0B          0B          0B</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="uso-del-disco-principal" class="level2">
 <h2 class="anchored" data-anchor-id="uso-del-disco-principal">Uso del Disco Principal</h2>
 <div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> df <span class="at">-h</span> /</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Filesystem</span>                         Size  Used Avail Use% Mounted on</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="ex">/dev/mapper/ubuntu--vg-ubuntu--lv</span>   12G  7,3G  3,5G  68% /</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="ex">/dev/mapper/ubuntu--vg-ubuntu--lv</span>  9,8G  4,9G  4,5G  53% /</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="procesos-con-mayor-consumo-de-memoria-ps" class="level2">
 <h2 class="anchored" data-anchor-id="procesos-con-mayor-consumo-de-memoria-ps">Procesos con Mayor Consumo de Memoria (ps)</h2>
 <p>Muestra el PID, el PPID y memoeria utilizados:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ps <span class="at">-eo</span> pid,ppid,cmd,%mem <span class="at">--sort</span><span class="op">=</span>-%mem <span class="kw">|</span> <span class="fu">head</span> <span class="at">-n</span> 11</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="ex">PID</span>    PPID CMD                         %MEM</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="ex">782</span>       1 /usr/sbin/mysqld             9.7</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>   <span class="ex">1076</span>       1 /usr/libexec/fwupd/fwupd     1.0</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="ex">345</span>       1 /sbin/multipathd <span class="at">-d</span> <span class="at">-s</span>       0.6</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="ex">705</span>       1 /usr/bin/python3 /usr/share  0.5</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="ex">296</span>       1 /usr/lib/systemd/systemd-jo  0.4</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="ex">666</span>       1 /usr/libexec/udisks2/udisks  0.3</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>      <span class="ex">1</span>       0 /sbin/init                   0.3</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    <span class="ex">725</span>       1 /usr/sbin/ModemManager       0.3</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    <span class="ex">534</span>       1 /usr/lib/systemd/systemd-re  0.3</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    <span class="ex">968</span>       1 /usr/lib/systemd/systemd <span class="at">--</span>  0.2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>   <span class="ex">1358</span>       1 /usr/libexec/fwupd/fwupd     1.0</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="ex">368</span>       1 /sbin/multipathd <span class="at">-d</span> <span class="at">-s</span>       0.6</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="ex">319</span>       1 /usr/lib/systemd/systemd-jo  0.4</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="ex">726</span>       1 /usr/libexec/udisks2/udisks  0.3</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>      <span class="ex">1</span>       0 /sbin/init                   0.3</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="ex">610</span>       1 /usr/lib/systemd/systemd-re  0.3</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    <span class="ex">771</span>       1 /usr/sbin/ModemManager       0.3</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>   <span class="ex">1064</span>       1 /usr/lib/systemd/systemd <span class="at">--</span>  0.2</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>   <span class="ex">1133</span>     745 sshd: sebastian <span class="pp">[</span><span class="ss">priv</span><span class="pp">]</span>       0.2</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>   <span class="ex">1365</span>       1 /usr/libexec/upowerd         0.2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 </section>
 
