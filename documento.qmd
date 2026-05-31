@@ -23,7 +23,7 @@ server
 ```bash
 $ free -h
                total        used        free      shared  buff/cache   available
-Mem:           3,8Gi       424Mi       2,7Gi       1,1Mi       915Mi       3,4Gi
+Mem:           3,8Gi       425Mi       2,7Gi       1,1Mi       921Mi       3,4Gi
 Swap:             0B          0B          0B
 
 ```
@@ -44,7 +44,7 @@ Muestra el PID, el PPID y memoeria utilizados:
 ```bash
 $ ps -eo pid,ppid,cmd,%mem --sort=-%mem | head -n 11
     PID    PPID CMD                         %MEM
-   1358       1 /usr/libexec/fwupd/fwupd     1.0
+   1358       1 /usr/libexec/fwupd/fwupd     1.1
     368       1 /sbin/multipathd -d -s       0.6
     319       1 /usr/lib/systemd/systemd-jo  0.4
     726       1 /usr/libexec/udisks2/udisks  0.3

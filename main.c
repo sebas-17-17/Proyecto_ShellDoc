@@ -101,39 +101,47 @@ void proceso_captura_terminal() {
 }
 
 void proceso_renderizado_quarto() {
-	    printf("[Proceso 2] Renderizador en espera... Aguardando señal del Proceso 1.\n");
-	    sem_t *sem = sem_open(SEM_QUARTO, 0);
-	    if (sem != SEM_FAILED) {
-	        sem_wait(sem); 
-	        sem_close(sem); 
-	    } else { 
-		    perror("Error al abrir el semáforo en el Proceso 2");
-		    exit(EXIT_FAILURE);
-	    }
-	    printf("[Proceso 2] ¡Señal recibida! El archivo QMD está listo. Iniciando Quarto...\n");
-	    int resultado = system("quarto render documento.qmd");
-	    if (resultado == 0) { 
-		    printf("[Proceso 2] ¡Éxito! El archivo documento.html ha sido generado mediante Quarto.\n"); 
-	    } else {
-		    printf("[Proceso 2] Error crítico: No se pudo renderizar documento.qmd.\n");
-	    }
-	    // NOTA: Si el Integrante 4 (Subida a la nube) implementa su semáforo,                          
+    printf("Proceso 2 (Renderizador) en espera de señal del Proceso 1.\n");
+    sem_t *sem = sem_open(SEM_QUARTO, 0);
+    if (sem != SEM_FAILED) {
+        sem_wait(sem);
+        sem_close(sem);
+    } else {
+        perror("Error al abrir el semáforo en el Proceso 2");
+        exit(EXIT_FAILURE);
+    }
+    
+    printf("Señal recibida por proceso 2. El archivo QMD está listo.\n");
+    
+    // 1. Renderiza el HTML local estándar
+    int resultado = system("quarto render documento.qmd");
+    
+    if (resultado == 0) {
+        printf("El archivo documento.html ha sido generado mediante Quarto.\n");
+        
+        // 2. AUTOMATIZACIÓN LOCAL: Levanta el servidor local en puerto 8080 en segundo plano (&)
+        // El " > /dev/null 2>&1 &" hace que corra oculto sin congelar la terminal
+        printf("Levantando servidor de previsualización local en http://localhost:8080/ \n");
+        system("quarto preview documento.qmd --port 8080 --host 0.0.0.0 > /dev/null 2>&1 &");
+        
+    } else {
+        printf("Error en proceso 2: No se pudo renderizar documento.qmd.\n");
+    }
 
-	    // aquí deberás poner el sem_post() de su respectivo semáforo.
-               
-	    //modificacion I4  proceso del semaforo nuevo ---
-	    sem_t *sem_cloud = sem_open(SEM_CLOUD,0);
-	    if(sem_cloud != SEM_FAILED) {
-		    printf("[Proceso 2] notificando al proceso del despliegue...\n");
-		    sem_post(sem_cloud);
-		    sem_close(sem_cloud);
-	   } 
-
+    // 3. AUTOMATIZACIÓN EN LA NUBE (Quarto Pub / GitHub)
+    // Notifica al Proceso 3 para que haga el git push. 
+    // Como activamos el "Automatically publish on push" en Posit Connect, Quarto Pub se actualizará SOLO.
+    sem_t *sem_cloud = sem_open(SEM_CLOUD, 0);
+    if (sem_cloud != SEM_FAILED) {
+        printf("Proceso 2 notificando al proceso de despliegue en la nube\n");
+        sem_post(sem_cloud);
+        sem_close(sem_cloud);
+    }
 }
 
            //proceso 3 I4--- 
 void proceso_deploy() {
-	printf("[Proceso 3] esperando señal para desplegar...\n");
+	printf("Proceso 3 (despliegue) en espera de señal del proceso 2\n");
 
 	sem_t *sem = sem_open(SEM_CLOUD,0);
 
@@ -147,13 +155,13 @@ void proceso_deploy() {
 	sem_wait(sem);
 	sem_close(sem);
 
-	printf("[Proceso 3] Ejecutando deploy a github...\n");
+	printf("Proceso 3 ejecutando despliegue a github\n");
 
 	system("git add .");
 	system("git commit -m \"deploy automatico\"");
 	system("git push");
 
-	printf("[Proceso 3] despliegue completado \n");
+	printf("Despliegue completado \n");
    
 }
 
@@ -162,7 +170,7 @@ int main() {
     pid_t pid1, pid2, pid3;  
     sem_t *sem, *sem_cloud;
 
-    printf("[Integrante 2] Iniciando control de procesos y semáforos...\n");
+    printf("Iniciando control de procesos y semáforos...\n");
 
     // 1. CREAR EL SEMÁFORO NOMBRADO QUE ESPERA EL INTEGRANTE 1 Y 3
     sem = sem_open(SEM_QUARTO, O_CREAT, 0644, 0);
@@ -220,7 +228,7 @@ int main() {
     sem_close(sem_cloud);
     sem_unlink(SEM_CLOUD); 
         
-        printf("[Main] Flujo del Integrante 2 completado con éxito.\n");
+        printf("Flujo del completado con éxito.\n");
     
 
     return 0;
