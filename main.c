@@ -9,6 +9,7 @@
 // Semáforo para el Integrante 3 (Renderizador )
 // sem_post equivale a semSignal
 #define SEM_QUARTO "/sem_quarto"
+#define SEM_CLOUD "/sem_cloud"  //nuevo semaforo para sincronizar proceso de despliegue ---
 
 void proceso_captura_terminal() {
     printf("Captura de comandos ejecutados en la sesión Linux\n");
@@ -117,13 +118,49 @@ void proceso_renderizado_quarto() {
 		    printf("[Proceso 2] Error crítico: No se pudo renderizar documento.qmd.\n");
 	    }
 	    // NOTA: Si el Integrante 4 (Subida a la nube) implementa su semáforo,                          
+
 	    // aquí deberás poner el sem_post() de su respectivo semáforo.
- }
+               
+	    //modificacion I4  proceso del semaforo nuevo ---
+	    sem_t *sem_cloud = sem_open(SEM_CLOUD,0);
+	    if(sem_cloud != SEM_FAILED) {
+		    printf("[Proceso 2] notificando al proceso del despliegue...\n");
+		    sem_post(sem_cloud);
+		    sem_close(sem_cloud);
+	   } 
+
+}
+
+           //proceso 3 I4--- 
+void proceso_deploy() {
+	printf("[Proceso 3] esperando señal para desplegar...\n");
+
+	sem_t *sem = sem_open(SEM_CLOUD,0);
+
+
+
+	if (sem == SEM_FAILED) {
+	    perror("Error al abrir SEM_CLOUD");
+	    exit(EXIT_FAILURE);
+	}
+    	
+	sem_wait(sem);
+	sem_close(sem);
+
+	printf("[Proceso 3] Ejecutando deploy a github...\n");
+
+	system("git add .");
+	system("git commit -m \"deploy automatico\"");
+	system("git push");
+
+	printf("[Proceso 3] despliegue completado \n");
+   
+}
 
 
 int main() {
-    pid_t pid1;
-    sem_t *sem;
+    pid_t pid1, pid2, pid3;  
+    sem_t *sem, *sem_cloud;
 
     printf("[Integrante 2] Iniciando control de procesos y semáforos...\n");
 
@@ -133,36 +170,58 @@ int main() {
         perror("Error al crear el semáforo SEM_QUARTO");
         exit(EXIT_FAILURE);
     }
+    // modificacion I4 creacion de semaforo para controla el deploy (proceso3)
+    sem_cloud = sem_open(SEM_CLOUD, O_CREAT, 0644, 0);
+    if (sem_cloud == SEM_FAILED) {
+	perror("Error al crear el semaforo SEM_CLOUD");
+	exit(EXIT_FAILURE);
+    }
+
+   // PROCESO 1    
 
     // 2. CREAR EL PROCESO HIJO MEDIANTE FORK
     pid1 = fork();
 
     if (pid1 < 0) {
         perror("Error al ejecutar fork");
-        sem_unlink(SEM_QUARTO); 
+
         exit(EXIT_FAILURE);
     } 
     else if (pid1 == 0) {
         // --- PROCESO HIJO 1 ---
         // Invoca la función de captura intacta como pide la guía
-        proceso_captura_terminal(); 
+        proceso_captura_terminal();
         exit(EXIT_SUCCESS);
-    } 
-    else {
-        // --- PROCESO PADRE ---
-        printf("[Padre] Proceso de captura asignado al Hijo 1 con PID: %d\n", pid1);
-        
-        // Esperamos a que el proceso hijo termine su ejecución por completo
-        wait(NULL); 
-        
-        printf("[Padre] El Hijo 1 ha terminado. Pasando control al renderizador.\n");
-        
+    
+    }
+    //proceso 2 render
+    pid2 = fork();
+
+    if (pid2 == 0) {
+        proceso_renderizado_quarto();
+        exit(EXIT_SUCCESS);
+    }
+    //proceso 3 deploy 
+    pid3 = fork();
+
+    if (pid3 == 0) {
+	proceso_deploy();
+	exit(EXIT_SUCCESS);
+    }
+
+    wait(NULL);
+    wait(NULL);
+    wait(NULL);
+
         // 3. LIMPIEZA DEL SEMÁFORO AL FINALIZAR EL PROGRAMA
-        sem_close(sem);
-        sem_unlink(SEM_QUARTO); 
+    sem_close(sem);
+    sem_unlink(SEM_QUARTO);
+
+    sem_close(sem_cloud);
+    sem_unlink(SEM_CLOUD); 
         
         printf("[Main] Flujo del Integrante 2 completado con éxito.\n");
-    }
+    
 
     return 0;
 }
