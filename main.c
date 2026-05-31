@@ -54,7 +54,7 @@ void proceso_captura_terminal() {
     system("free -h >> documento.qmd"); 
 
     archivo = fopen("documento.qmd", "a");
-    fprintf(archivo, "\n ```\n\n");
+    fprintf(archivo, "\n```\n\n");
 
 
     //Comando para ver el almacenamiento
