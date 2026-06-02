@@ -9,7 +9,7 @@
 // Semáforo para el Integrante 3 (Renderizador )
 // sem_post equivale a semSignal
 #define SEM_QUARTO "/sem_quarto"
-#define SEM_CLOUD "/sem_cloud"  //nuevo semaforo para sincronizar proceso de despliegue ---
+#define SEM_CLOUD "/sem_cloud" 
 
 void proceso_captura_terminal() {
     printf("Captura de comandos ejecutados en la sesión Linux\n");
@@ -93,7 +93,7 @@ void proceso_captura_terminal() {
     sem_t *sem = sem_open(SEM_QUARTO, 0); 
     if (sem != SEM_FAILED) {
         printf("Enviando señal semSignal(sem_quarto) para iniciar renderizado\n");
-        sem_post(sem); // Esto equivale al semSignal()
+        sem_post(sem);
         sem_close(sem);
     } else {
         printf("Semáforo no encontrado\n");
@@ -119,8 +119,7 @@ void proceso_renderizado_quarto() {
     if (resultado == 0) {
         printf("El archivo documento.html ha sido generado mediante Quarto.\n");
         
-        // 2. AUTOMATIZACIÓN LOCAL: Levanta el servidor local en puerto 8080 en segundo plano (&)
-        // El " > /dev/null 2>&1 &" hace que corra oculto sin congelar la terminal
+        // 2. AUTOMATIZACIÓN LOCAL: Levanta el servidor local en puerto 8080 
         printf("Levantando servidor de previsualización local en http://localhost:8080/ \n");
         system("quarto preview documento.qmd --port 8080 --host 0.0.0.0 > /dev/null 2>&1 &");
         
@@ -129,8 +128,6 @@ void proceso_renderizado_quarto() {
     }
 
     // 3. AUTOMATIZACIÓN EN LA NUBE (Quarto Pub / GitHub)
-    // Notifica al Proceso 3 para que haga el git push. 
-    // Como activamos el "Automatically publish on push" en Posit Connect, Quarto Pub se actualizará SOLO.
     sem_t *sem_cloud = sem_open(SEM_CLOUD, 0);
     if (sem_cloud != SEM_FAILED) {
         printf("Proceso 2 notificando al proceso de despliegue en la nube\n");

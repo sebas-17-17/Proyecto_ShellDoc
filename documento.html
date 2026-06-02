@@ -116,7 +116,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="estado-de-la-memoria-ram">Estado de la Memoria RAM</h2>
 <div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> free <span class="at">-h</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>               <span class="ex">total</span>        used        free      shared  buff/cache   available</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Mem:</span>           3,8Gi       425Mi       2,7Gi       1,1Mi       921Mi       3,4Gi</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Mem:</span>           3,8Gi       387Mi       3,3Gi       1,0Mi       325Mi       3,4Gi</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="ex">Swap:</span>             0B          0B          0B</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="uso-del-disco-principal" class="level2">
@@ -130,16 +130,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Muestra el PID, el PPID y memoeria utilizados:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ps <span class="at">-eo</span> pid,ppid,cmd,%mem <span class="at">--sort</span><span class="op">=</span>-%mem <span class="kw">|</span> <span class="fu">head</span> <span class="at">-n</span> 11</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="ex">PID</span>    PPID CMD                         %MEM</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>   <span class="ex">1358</span>       1 /usr/libexec/fwupd/fwupd     1.1</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="ex">368</span>       1 /sbin/multipathd <span class="at">-d</span> <span class="at">-s</span>       0.6</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="ex">319</span>       1 /usr/lib/systemd/systemd-jo  0.4</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="ex">726</span>       1 /usr/libexec/udisks2/udisks  0.3</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="ex">367</span>       1 /sbin/multipathd <span class="at">-d</span> <span class="at">-s</span>       0.6</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="ex">730</span>       1 /usr/bin/python3 /usr/share  0.5</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="ex">318</span>       1 /usr/lib/systemd/systemd-jo  0.4</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="ex">696</span>       1 /usr/libexec/udisks2/udisks  0.3</span>
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>      <span class="ex">1</span>       0 /sbin/init                   0.3</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="ex">610</span>       1 /usr/lib/systemd/systemd-re  0.3</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    <span class="ex">771</span>       1 /usr/sbin/ModemManager       0.3</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>   <span class="ex">1064</span>       1 /usr/lib/systemd/systemd <span class="at">--</span>  0.2</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>   <span class="ex">1133</span>     745 sshd: sebastian <span class="pp">[</span><span class="ss">priv</span><span class="pp">]</span>       0.2</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>   <span class="ex">1365</span>       1 /usr/libexec/upowerd         0.2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="ex">774</span>       1 /usr/sbin/ModemManager       0.3</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    <span class="ex">559</span>       1 /usr/lib/systemd/systemd-re  0.3</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    <span class="ex">960</span>       1 /usr/lib/systemd/systemd <span class="at">--</span>  0.2</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>   <span class="ex">1021</span>     723 sshd: sebastian <span class="pp">[</span><span class="ss">priv</span><span class="pp">]</span>       0.2</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    <span class="ex">544</span>       1 /usr/lib/systemd/systemd-ne  0.2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 </section>
 
