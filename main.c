@@ -56,7 +56,7 @@ void proceso_captura_terminal() {
 
     archivo = fopen("documento.qmd", "a");
     fprintf(archivo, "\n```\n\n");
-
+       
 
     //Comando para ver el almacenamiento
     fprintf(archivo, "## Uso del Disco Principal\n\n");
@@ -83,6 +83,18 @@ void proceso_captura_terminal() {
 
     archivo = fopen("documento.qmd", "a");
     fprintf(archivo, "\n```\n");
+
+    // Comando para listar archivos y directorios
+    fprintf(archivo, "## Ls de prueba\n\n");
+    fprintf(archivo, "```bash\n");
+    fprintf(archivo, "$ ls \n");
+    fflush(archivo);
+    fclose(archivo);
+
+    system("ls >> documento.qmd");
+
+    archivo = fopen("documento.qmd", "a");
+    fprintf(archivo, "\n```\n\n");  
 
 
     //Cerrar el archivo
